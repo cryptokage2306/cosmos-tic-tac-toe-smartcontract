@@ -5,8 +5,8 @@ use cosmwasm_std::{
 use cw_storage_plus::Bound;
 
 use crate::error::ContractError;
-use crate::msg::{ExecuteMsg, GameResult, InstantiateMsg, QueryMsg};
-use crate::state::{Game, GameBoard, GameState, GAME_MAP};
+use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
+use crate::state::{Game, GameBoard, GameResult, GameState, GAME_MAP};
 
 // settings for pagination
 const MAX_LIMIT: u32 = 30;
@@ -300,16 +300,13 @@ fn query_all_games(
 }
 
 fn find_winner_by_board(game: GameBoard) -> StdResult<GameResult> {
+    if !is_valid_board(&game, false) {
+        return Err(StdError::generic_err("Please check content of tic tac toe"));
+    }
     if validate_game(game.clone(), true)? {
-        if !is_valid_board(&game, false) {
-            return Err(StdError::generic_err("Please check content of tic tac toe"));
-        }
         return Ok(GameResult::Cross);
     }
     if validate_game(game.clone(), false)? {
-        if !is_valid_board(&game, false) {
-            return Err(StdError::generic_err("Please check content of tic tac toe"));
-        }
         return Ok(GameResult::Nought);
     }
     if is_valid_board(&game, true) {

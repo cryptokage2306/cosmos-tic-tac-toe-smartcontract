@@ -5,15 +5,18 @@ use cosmwasm_std::{Addr, Coin};
 use cw_storage_plus::Map;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct COUNTER {
-    pub count: i32,
-    pub owner: Addr,
+pub enum GameResult {
+    Cross,
+    Nought,
+    Draw,
+    NoResult,
 }
+
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub enum GameState {
     Pending,
     Started,
-    Completed
+    Completed,
 }
 
 pub type GameBoard = [[Option<bool>; 3]; 3];

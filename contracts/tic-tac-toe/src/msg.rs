@@ -43,16 +43,3 @@ pub enum QueryMsg {
         limit: Option<u32>,
     },
 }
-// We define a custom struct for each query response
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct CountResponse {
-    pub count: i32,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub enum GameResult {
-    Cross,
-    Nought,
-    Draw,
-    NoResult,
-}
